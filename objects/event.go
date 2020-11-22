@@ -44,3 +44,17 @@ type Event struct {
 	CancelledOn   time.Time `json:"cancelled_on,omitempty"`
 	RescheduledOn time.Time `json:"rescheduled_on,omitempty"`
 }
+
+type Customer struct {
+	ID 			string `gorm:"primary_key" json:"id,omitempty"`
+	Name        string `json:"name,omitempty"`
+}
+
+type Tabler interface {
+	TableName() string
+}
+
+// TableName overrides the table name used by User to `profiles`
+func (Customer) TableName() string {
+	return "customer"
+}

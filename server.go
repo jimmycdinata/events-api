@@ -62,4 +62,7 @@ func RegisterAllRoutes(router *mux.Router, hnd handlers.IEventHandler) {
 
 	// list events
 	router.HandleFunc("/events", hnd.List).Methods(http.MethodGet)
+
+	// list customers
+	router.HandleFunc("/customers", hnd.Customers).Methods(http.MethodGet)
 }

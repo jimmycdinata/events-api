@@ -7,7 +7,7 @@ import (
 
 func main() {
 	args := Args{
-		conn: "postgres://postgres:@localhost:5432/postgres?sslmode=disable",
+		conn: "postgres://postgres:kudabesi@docker.for.mac.localhost:5433/indosandb",
 		port: ":8080",
 	}
 	if conn := os.Getenv("DB_CONN"); conn != "" {

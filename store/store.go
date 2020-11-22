@@ -18,6 +18,7 @@ type IEventStore interface {
 	Cancel(ctx context.Context, in *objects.CancelRequest) error
 	Reschedule(ctx context.Context, in *objects.RescheduleRequest) error
 	Delete(ctx context.Context, in *objects.DeleteRequest) error
+	Customers(ctx context.Context, in *objects.GetCustomerRequest) (*objects.Customer, error)
 }
 
 func init() {

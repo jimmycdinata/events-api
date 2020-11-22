@@ -10,22 +10,6 @@ services:
     restart: on-failure
     environment:
       PORT: 8080
-      DB_CONN: "postgres://user:password@db:5432/db?sslmode=disable"
+      DB_CONN: "postgres://postgres:kudabesi@docker.for.mac.localhost:5433/indosandb"
     volumes:
       - .:/app
-    depends_on:
-      - db
-    links:
-      - db
-
-  db:
-    image: postgres
-    container_name: events_db
-    ports:
-      - '5432:5432'
-    environment:
-      POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: "db"
-      TZ: 'UTC'
-      PGTZ: 'UTC'

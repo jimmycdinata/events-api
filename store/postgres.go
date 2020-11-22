@@ -33,9 +33,9 @@ func NewPostgresEventStore(conn string) IEventStore {
 	if err != nil {
 		panic("Enable to connect to database: " + err.Error())
 	}
-	if err := db.AutoMigrate(&objects.Event{}); err != nil {
-		panic("Enable to migrate database: " + err.Error())
-	}
+	//if err := db.AutoMigrate(&objects.Event{}); err != nil {
+	//	panic("Enable to migrate database: " + err.Error())
+	//}
 	// return store implementation
 	return &pg{db: db}
 }
@@ -43,6 +43,17 @@ func NewPostgresEventStore(conn string) IEventStore {
 func (p *pg) Get(ctx context.Context, in *objects.GetRequest) (*objects.Event, error) {
 	evt := &objects.Event{}
 	// take event where id == uid from database
+	err := p.db.WithContext(ctx).Take(evt, "id = ?", in.ID).Error
+	if err == gorm.ErrRecordNotFound {
+		// not found
+		return nil, errors.ErrEventNotFound
+	}
+	return evt, err
+}
+
+func (p *pg) Customers(ctx context.Context, in *objects.GetCustomerRequest) (*objects.Customer, error) {
+	evt := &objects.Customer{}
+	// take customer where id == uid from database
 	err := p.db.WithContext(ctx).Take(evt, "id = ?", in.ID).Error
 	if err == gorm.ErrRecordNotFound {
 		// not found

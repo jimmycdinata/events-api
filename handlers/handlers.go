@@ -18,6 +18,7 @@ type IEventHandler interface {
 	Cancel(w http.ResponseWriter, r *http.Request)
 	Reschedule(w http.ResponseWriter, r *http.Request)
 	Delete(w http.ResponseWriter, r *http.Request)
+	Customers(w http.ResponseWriter, r *http.Request)
 }
 
 type handler struct {
@@ -41,6 +42,20 @@ func (h *handler) Get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	WriteResponse(w, &objects.EventResponseWrapper{Event: evt})
+}
+
+func (h *handler) Customers(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.Query().Get("id")
+	if id == "" {
+		WriteError(w, errors.ErrValidEventIDIsRequired)
+		return
+	}
+	evt, err := h.store.Customers(r.Context(), &objects.GetCustomerRequest{ID: id})
+	if err != nil {
+		WriteError(w, err)
+		return
+	}
+	WriteResponse(w, &objects.CustomerResponseWrapper{Customer: evt})
 }
 
 func (h *handler) List(w http.ResponseWriter, r *http.Request) {

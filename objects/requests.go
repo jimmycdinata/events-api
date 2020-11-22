@@ -5,12 +5,18 @@ import (
 	"net/http"
 )
 
-// MaxListLimit maximum listting
+// MaxListLimit maximum listing
 const MaxListLimit = 200
 
 // GetRequest for retrieving single Event
 type GetRequest struct {
 	ID string `json:"id"`
+}
+
+// GetCustomerRequest for retrieving single Customer
+type GetCustomerRequest struct {
+	ID string `json:"id"`
+	Name string `json:"name"`
 }
 
 // ListRequest for retrieving list of Events
@@ -52,7 +58,7 @@ type DeleteRequest struct {
 	ID string `json:"id"`
 }
 
-// EventResponseWrapper reponse of any Event request
+// EventResponseWrapper response of any Event request
 type EventResponseWrapper struct {
 	Event  *Event   `json:"event,omitempty"`
 	Events []*Event `json:"events,omitempty"`
@@ -70,6 +76,30 @@ func (e *EventResponseWrapper) JSON() []byte {
 
 // StatusCode return status code
 func (e *EventResponseWrapper) StatusCode() int {
+	if e == nil || e.Code == 0 {
+		return http.StatusOK
+	}
+	return e.Code
+}
+
+// CustomerResponseWrapper response of any Customer request
+type CustomerResponseWrapper struct {
+	Customer  *Customer   `json:"customer,omitempty"`
+	Customers []*Customer `json:"customers,omitempty"`
+	Code   int      `json:"-"`
+}
+
+// JSON convert CustomerResponseWrapper in json
+func (e *CustomerResponseWrapper) JSON() []byte {
+	if e == nil {
+		return []byte("{}")
+	}
+	res, _ := json.Marshal(e)
+	return res
+}
+
+// StatusCode return status code
+func (e *CustomerResponseWrapper) StatusCode() int {
 	if e == nil || e.Code == 0 {
 		return http.StatusOK
 	}

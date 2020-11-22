@@ -170,3 +170,16 @@ Content-Type: application/json
 ###
 ```
 
+**Select the customers**
+```http request
+DELETE http://localhost:8080/api/v1/customers?id=10
+Content-Type: application/json
+
+{
+  "customer": {
+    "id": "10",
+    "name": "UMUM"
+  }
+}
+```
+
