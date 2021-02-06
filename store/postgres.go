@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/smahjoub/events-api/errors"
-	"github.com/smahjoub/events-api/objects"
+	"github.com/jimmycdinata/events-api/errors"
+	"github.com/jimmycdinata/events-api/objects"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

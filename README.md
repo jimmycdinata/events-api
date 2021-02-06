@@ -183,3 +183,12 @@ Content-Type: application/json
 }
 ```
 
+1. Run nsq on docker: nsq-docker/docker-compose up -d
+2. Cek admin http://localhost:4171/
+3. After change code events-api, run: docker-compose build
+4. After build, run: docker-compose up
+5. If we want run on GoLand, click events-api folder, right click: Run | go build github.com/jimmycdinata/events-api
+
+5. Run consumer.go (timonsq): $ ./consumer
+6. Run insomnia url: http://localhost:8080/api/v1/customers?id=10. It will return customer id 10, name UMUM and publish message to nsqd, and consumer will write the message 
+

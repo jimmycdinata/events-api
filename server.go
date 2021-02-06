@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/smahjoub/events-api/handlers"
-	"github.com/smahjoub/events-api/store"
+	"github.com/jimmycdinata/events-api/handlers"
+	"github.com/jimmycdinata/events-api/store"
 )
 
 // Args args used to run the server

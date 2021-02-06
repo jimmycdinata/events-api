@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/smahjoub/events-api/objects"
+	"github.com/jimmycdinata/events-api/objects"
 )
 
 // IEventStore is the database interface for storing Events

@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/smahjoub/events-api/errors"
-	"github.com/smahjoub/events-api/objects"
+	"github.com/jimmycdinata/events-api/errors"
+	"github.com/jimmycdinata/events-api/objects"
 )
 
 // Response helper used to write reponse

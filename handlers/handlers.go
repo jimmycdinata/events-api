@@ -1,13 +1,22 @@
 package handlers
 
 import (
+	"encoding/json"
+	"github.com/jimmycdinata/events-api/errors"
+	"github.com/jimmycdinata/events-api/objects"
+	"github.com/jimmycdinata/events-api/store"
+	"github.com/nsqio/go-nsq"
 	"io/ioutil"
+	"log"
 	"net/http"
-
-	"github.com/smahjoub/events-api/errors"
-	"github.com/smahjoub/events-api/objects"
-	"github.com/smahjoub/events-api/store"
+	"time"
 )
+
+type Message struct {
+	Name      string
+	Content   string
+	Timestamp string
+}
 
 // IEventHandler is implement all the handlers
 type IEventHandler interface {
@@ -55,6 +64,34 @@ func (h *handler) Customers(w http.ResponseWriter, r *http.Request) {
 		WriteError(w, err)
 		return
 	}
+
+	// Start publish
+	//The only valid way to instantiate the Config
+	config := nsq.NewConfig()
+	//Creating the Producer using NSQD Address
+	producer, err := nsq.NewProducer("docker.for.mac.localhost:4150", config)
+	if err != nil {
+		log.Fatal(err)
+	}
+	//Init topic name and message
+	topic := "Topic_Example"
+	msg := Message{
+		Name:      "Message Name Example",
+		Content:   "Message Content Example",
+		Timestamp: time.Now().String(),
+	}
+	//Convert message as []byte
+	payload, err := json.Marshal(msg)
+	if err != nil {
+		log.Println(err)
+	}
+	//Publish the Message
+	err = producer.Publish(topic, payload)
+	if err != nil {
+		log.Println(err)
+	}
+	log.Println("Should be send message")
+
 	WriteResponse(w, &objects.CustomerResponseWrapper{Customer: evt})
 }
 
